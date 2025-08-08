@@ -1,0 +1,41 @@
+name: Depoly
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        ref: master
+        path: ./
+
+    - name: Mkdir public
+      run: mkdir public
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: stable
+        
+    - name: Build for web 
+      run: |
+        flutter build web --release --base-href="/club_recommend/"
+
+    - name: Copy to public
+      run: |
+        cp -r build/web/* public/
+
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v4
+      with:
+        FOLDER: public
