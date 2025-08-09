@@ -313,6 +313,7 @@ class _ClubDetailPageState extends State<ClubDetailPage> {
                                     MaterialPageRoute(
                                       builder: (context) {
                                         return ClubImageView(
+                                          color: widget.info.color,
                                           images: _image,
                                           initalPage: index,
                                         );
@@ -342,7 +343,6 @@ class _ClubDetailPageState extends State<ClubDetailPage> {
                                 padding: EdgeInsetsGeometry.only(
                                   left: 8,
                                   right: 8,
-                                  bottom: 2,
                                 ),
                                 child: Html(
                                   data: snapshot.data ?? '''<p>加载遇到问题</p>''',
