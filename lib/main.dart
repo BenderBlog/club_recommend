@@ -3,10 +3,8 @@ import 'dart:ui';
 import 'package:club_recommend/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 void main() {
-  usePathUrlStrategy();
   runApp(const MyApp());
 }
 
