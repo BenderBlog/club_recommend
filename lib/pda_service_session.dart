@@ -32,6 +32,23 @@ Future<ResultDart<List<ClubInfo>, Exception>> getClubList() async {
   }
 }
 
+Future<ResultDart<ClubInfo, Exception>> getClubInfo(String code) async {
+  try {
+    var data = await http
+        .get(url.replace(pathSegments: ["traintime_pda_backend", "club.json"]))
+        .then((value) => value.body);
+    return (jsonDecode(data) as List<dynamic>)
+        .map<ClubInfo>((value) => ClubInfo.fromJson(value))
+        .toList()
+        .firstWhere((value) => value.code == code)
+        .toSuccess();
+  } on Exception catch (e) {
+    return failureOf(e);
+  } catch (e) {
+    return failureOf(Exception(e.toString()));
+  }
+}
+
 Future<String> getClubArticle(String code) {
   return http
       .get(

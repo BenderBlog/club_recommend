@@ -1,10 +1,10 @@
 import 'package:club_recommend/club_card.dart';
-import 'package:club_recommend/club_detail.dart';
 import 'package:club_recommend/club_info.dart';
 import 'package:club_recommend/pda_service_session.dart';
 import 'package:club_recommend/reload_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:go_router/go_router.dart';
 import 'package:result_dart/result_dart.dart';
 
 class ClubSuggestion extends StatefulWidget {
@@ -52,14 +52,12 @@ class _ClubSuggestionState extends State<ClubSuggestion> {
                   mainAxisSpacing: 4,
                   crossAxisSpacing: 4,
                   itemBuilder: (context, index) {
-                    final data = clubList[index];
                     return GestureDetector(
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ClubDetail(info: data),
-                        ),
+                      onTap: () => context.pushNamed(
+                        "detail",
+                        pathParameters: {"code": clubList[index].code},
                       ),
-                      child: ClubCard(data: data),
+                      child: ClubCard(data: clubList[index]),
                     );
                   },
                 ),

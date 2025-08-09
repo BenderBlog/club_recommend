@@ -6,19 +6,85 @@ import 'package:club_recommend/tagbox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:result_dart/result_dart.dart';
 import 'package:toastification/toastification.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class ClubDetail extends StatefulWidget {
-  final ClubInfo info;
-
-  const ClubDetail({super.key, required this.info});
+  final String code;
+  const ClubDetail({super.key, required this.code});
 
   @override
   State<ClubDetail> createState() => _ClubDetailState();
 }
 
 class _ClubDetailState extends State<ClubDetail> {
+  late Future<ResultDart<ClubInfo, Exception>> _future;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.code.isNotEmpty) {
+      _future = getClubInfo(widget.code);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.code.isEmpty
+        ? Scaffold(
+            appBar: AppBar(title: Text("错误参数")),
+            body: Text("未传入社团信息"),
+          )
+        : FutureBuilder<ResultDart<ClubInfo, Exception>>(
+            future: _future,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState != ConnectionState.done) {
+                return Scaffold(
+                  appBar: AppBar(title: Text("正在加载")),
+                  body: CircularProgressIndicator(),
+                );
+              }
+
+              if (snapshot.hasError) {
+                return Scaffold(
+                  appBar: AppBar(title: Text("在外围遇到错误")),
+                  body: ReloadWidget(
+                    function: () => setState(() {
+                      _future = getClubInfo(widget.code);
+                    }),
+                    errorStatus: snapshot.error,
+                  ),
+                );
+              }
+
+              return snapshot.data!.fold(
+                (success) => ClubDetailPage(info: success),
+                (failure) => Scaffold(
+                  appBar: AppBar(title: Text("遇到错误")),
+                  body: ReloadWidget(
+                    function: () => setState(() {
+                      _future = getClubInfo(widget.code);
+                    }),
+                    errorStatus: failure,
+                  ),
+                ),
+              );
+            },
+          );
+  }
+}
+
+class ClubDetailPage extends StatefulWidget {
+  final ClubInfo info;
+
+  const ClubDetailPage({super.key, required this.info});
+
+  @override
+  State<ClubDetailPage> createState() => _ClubDetailPageState();
+}
+
+class _ClubDetailPageState extends State<ClubDetailPage> {
   late ScrollController _scrollController;
   late Future<String> _content;
   final List<ImageProvider> _image = [];
