@@ -1,5 +1,5 @@
 import 'package:club_recommend/club_info.dart';
-import 'package:club_recommend/image_view.dart';
+import 'package:club_recommend/club_image_view.dart';
 import 'package:club_recommend/pda_service_session.dart';
 import 'package:club_recommend/reload_widget.dart';
 import 'package:club_recommend/tagbox.dart';
@@ -189,6 +189,7 @@ class _ClubDetailPageState extends State<ClubDetailPage> {
                                   ClubType.art => "文化",
                                   ClubType.game => "游戏",
                                   ClubType.unknown => "未知",
+                                  ClubType.all => "所有",
                                 },
                               ),
                             ),
@@ -311,7 +312,7 @@ class _ClubDetailPageState extends State<ClubDetailPage> {
                                   onTap: () => Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) {
-                                        return ImageView(
+                                        return ClubImageView(
                                           images: _image,
                                           initalPage: index,
                                         );

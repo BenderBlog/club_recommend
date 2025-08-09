@@ -1,16 +1,20 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
-class ImageView extends StatefulWidget {
+class ClubImageView extends StatefulWidget {
   final List<ImageProvider> images;
   final int initalPage;
-  const ImageView({super.key, required this.images, required this.initalPage});
+  const ClubImageView({
+    super.key,
+    required this.images,
+    required this.initalPage,
+  });
 
   @override
-  State<ImageView> createState() => _ImageViewState();
+  State<ClubImageView> createState() => _ClubImageViewState();
 }
 
-class _ImageViewState extends State<ImageView> {
+class _ClubImageViewState extends State<ClubImageView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

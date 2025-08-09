@@ -16,13 +16,17 @@ final url = Uri(
   pathSegments: ["traintime_pda_backend"],
 );
 
-Future<ResultDart<List<ClubInfo>, Exception>> getClubList() async {
+Future<ResultDart<List<ClubInfo>, Exception>> getClubList(ClubType type) async {
   try {
     var data = await http
         .get(url.replace(pathSegments: ["traintime_pda_backend", "club.json"]))
         .then((value) => value.body);
     return (jsonDecode(data) as List<dynamic>)
         .map<ClubInfo>((value) => ClubInfo.fromJson(value))
+        .where((value) {
+          if (type == ClubType.all) return true;
+          return value.type.contains(type);
+        })
         .toList()
         .toSuccess();
   } on Exception catch (e) {

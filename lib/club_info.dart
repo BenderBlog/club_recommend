@@ -7,6 +7,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'club_info.g.dart';
 
 enum ClubType {
+  all, // 用于搜索
   tech, // 技术社团
   acg, // Shining-ACG 社团部门专用
   union, // 有跟学校官方部门接触

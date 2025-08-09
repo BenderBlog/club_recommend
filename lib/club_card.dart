@@ -66,6 +66,7 @@ class ClubCard extends StatelessWidget {
                                         ClubType.art => "文化",
                                         ClubType.unknown => "未知",
                                         ClubType.game => "游戏",
+                                        ClubType.all => "所有",
                                       },
                                       style: TextStyle(
                                         color: Theme.of(
