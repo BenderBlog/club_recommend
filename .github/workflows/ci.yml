@@ -23,13 +23,12 @@ jobs:
       - name: build
         env:
           BASE_PATH: '/${{ github.event.repository.name }}'
-          run: |
-            npm run build
+        run: |
+          npm run build
 
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          # 这应该与适配器静态选项中的 `pages` 选项匹配
           path: 'build/'
 
   deploy:
