@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Icon, LoadingIndicator } from 'm3-svelte';
-	import home from '@ktibow/iconset-material-symbols/home';
+	import iconCode from '@ktibow/iconset-material-symbols/code';
 
 	import { ClubType, clubTypeName } from '$lib/model';
 	import ReloadWidget from '$lib/components/ReloadWidget.svelte';
@@ -39,8 +39,12 @@
 {/snippet}
 
 {#snippet icon_button()}
-	<Button variant="text">
-		<Icon icon={home}></Icon>
+	<Button
+		variant="text"
+		iconType="full"
+		onclick={() => window.open('https://github.com/BenderBlog/club_recommend')}
+	>
+		<Icon icon={iconCode}></Icon>
 	</Button>
 {/snippet}
 
@@ -73,7 +77,7 @@
 						{/each}
 					</div>
 				{:else}
-					<div class="content-center">
+					<div class="items-center">
 						<p>没有找到该分类下的社团。</p>
 					</div>
 				{/if}
